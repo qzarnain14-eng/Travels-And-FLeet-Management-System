@@ -21,20 +21,18 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // it will get the authtoken from the storage
+  // Sync login status and close menu on route change or storage event
   useEffect(() => {
-    const handleStorageChange = () => {
+    const syncStatus = () => {
       setIsLoggedIn(!!localStorage.getItem('authToken'));
+      setIsOpen(false);
     };
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, []);
 
-  //it will maintain the login when authtoken is present for all routes.
-  useEffect(() => {
-    setIsLoggedIn(!!localStorage.getItem('authToken'));
-    setIsOpen(false);
-  }, [location]);
+    syncStatus(); // Initial sync on mount and location change
+
+    window.addEventListener('storage', syncStatus);
+    return () => window.removeEventListener('storage', syncStatus);
+  }, [location.pathname]);
 
   const navLinks = [
     { to: "/", label: "Home" },

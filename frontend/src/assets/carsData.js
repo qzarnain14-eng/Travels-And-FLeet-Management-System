@@ -1,7 +1,7 @@
 // carsData.js
 import C1 from "../assets/C1.png"
 import C2 from "../assets/C2.png";
-import C3 from "../assets/C3.png";
+import C3 from "../assets/C3.jpg";
 import C4 from "../assets/C4.png";
 import C5 from "../assets/C5.png";
 import C6 from "../assets/C6.png";
@@ -79,7 +79,7 @@ const carsData = [
     mileage: "23 MPG",
     transmission: "Automatic"
   },
-   {
+  {
     id: 13,
     name: "Lamborghini Huracán",
     type: "Supercar",
@@ -106,7 +106,7 @@ const carsData = [
     name: "McLaren 720S",
     type: "Supercar",
     price: 90000,
-    image:C9,
+    image: C9,
     seats: 2,
     fuel: "Premium",
     mileage: "14 MPG",
@@ -139,13 +139,13 @@ const carsData = [
     name: "Ford Mustang GT",
     type: "Muscle Car",
     price: 200000,
-    image:C12,
+    image: C12,
     seats: 4,
     fuel: "Gasoline",
     mileage: "18 MPG",
     transmission: "Manual"
   },
- 
+
 ];
 
 export default carsData;
