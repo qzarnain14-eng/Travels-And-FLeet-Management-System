@@ -92,18 +92,51 @@ const Testimonial = () => {
                 {/*STATS SECTIONS*/}
                 <div className={styles.statsContainer}>
                     <div className={styles.statsGrid}>
-                        <div className={styles.statsItem}>
-                            <div className={styles.statsValue(styles.statsColors.value[0])}>10k+</div>
-                            <div className={styles.statsLabel(styles.statsColors.label[0])}>
+                        <div className={styles.statItem}>
+                            <div className={styles.statValue(styles.statColors.value[0])}>10k+</div>
+                            <div className={styles.statLabel(styles.statColors.label[0])}>
                                 Happy Customers
                             </div>
-
                         </div>
 
-                    </div>
+                        <div className={styles.statItem}>
+                            <div className={styles.statValue(styles.statColors.value[1])}>250k+</div>
+                            <div className={styles.statLabel(styles.statColors.label[1])}>
+                                Luxury Vehicles
+                            </div>
+                        </div>
 
+                        <div className={styles.statItem}>
+                            <div className={styles.statValue(styles.statColors.value[2])}>24/7</div>
+                            <div className={styles.statLabel(styles.statColors.label[2])}>
+                                Support
+                            </div>
+                        </div>
+
+                        <div className={styles.statItem}>
+                            <div className={styles.statValue(styles.statColors.value[3])}>50+</div>
+                            <div className={styles.statLabel(styles.statColors.label[3])}>
+                                Locations
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* CTA */}
+                <div className={styles.ctaContainer}>
+                    <h2 className={styles.ctaTitle}>
+                        Ready for your experience
+                    </h2>
+                    <p className={styles.ctaText}>
+                        Join Thousand Of Statisfieed Customer Who Have Experience Our Premium Fleet And Exceptional Service
+                    </p>
+                    <a href="/cars" className={styles.ctaButton}>
+                        Book Your Luxury Ride
+                    </a>
                 </div>
             </div>
+
+            <div className={styles.bottomGradient} />
         </div>
     )
 }

@@ -113,7 +113,7 @@ const HomeCars = () => {
                                 }
                                     className={styles.bookButton}
                                 >
-                                    <span className={styles.bookButtonText}>
+                                    <span className={styles.buttonText}>
                                         Book Now
                                         <ArrowRight className=" ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                     </span>
