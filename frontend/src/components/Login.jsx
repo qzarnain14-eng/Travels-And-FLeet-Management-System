@@ -2,13 +2,9 @@ import React, { useEffect } from 'react'
 import { loginStyles } from '../assets/dummyStyles'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useState } from 'react'
-import { FaArrowLeft, FaUser } from 'react-icons/fa'
+import { FaArrowLeft, FaEyeSlash, FaLock, FaUser, FaEye } from 'react-icons/fa'
 import logo from '../assets/logocar.png'
 import { toast } from 'react-toastify'
-
-
-
-
 
 
 const Login = () => {
@@ -38,18 +34,24 @@ const Login = () => {
 
         toast.success('Login Successful! Welcome back', {
             position: 'top-right',
+            autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true,
             theme: 'colored',
-            onClose: () => {
-                const redirectPath = location.state?.from || '/';
-                navigate(redirectPath, { replace: true });
-            }
         });
 
+        // Small delay to let the user see the toast before navigating
+        setTimeout(() => {
+            const redirectPath = location.state?.from || '/';
+            navigate(redirectPath, { replace: true });
+        }, 2000);
+
     }
+
+
+    const togglePasswordVisibility = () => setShowPassword(prev => !prev);
 
 
 
@@ -109,11 +111,35 @@ const Login = () => {
                                 <input type="email" name="email" value={credentials.email} onChange={handleChange} placeholder='Enter Your E-MAil'
                                     required className={loginStyles.form.input}
                                 />
-
                             </div>
-
                         </div>
+
+                        <div className={loginStyles.form.inputContainer}>
+                            <div className={loginStyles.form.inputWrapper}>
+                                <div className={loginStyles.form.inputIcon}>
+                                    <FaLock />
+                                </div>
+                                <input type={showPassword ? 'text' : 'password'} name="password" value={credentials.password} onChange={handleChange} placeholder='Enter Your Password'
+                                    required className={loginStyles.form.input}
+                                />
+                                <div onClick={togglePasswordVisibility} className={loginStyles.form.passwordToggle}>
+                                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" className={loginStyles.form.submitButton}>
+                            <span className={loginStyles.form.buttonText}>ACCESS PREMIUM GARAGE </span>
+                            <div className={loginStyles.form.buttonHover} />
+                        </button>
                     </form>
+
+                    <div className={loginStyles.signupSection}>
+                        <p className={loginStyles.signupText}>Don't have an account?</p>
+                        <a href="/signup" className={loginStyles.signupButton}>
+                            CREATE ACCOUNT
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

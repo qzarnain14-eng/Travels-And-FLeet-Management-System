@@ -74,19 +74,19 @@ const Footer = () => {
             <ul className={styles.contactList}>
               <li className={styles.contactItem}>
                 <FaMapMarkerAlt className={styles.contactIcon} />
-                <span>VIP Road Vesu, Surat, Gujarat, INDIA</span>
+                <span>VIP Road VESU, SURAT, GUJARAT, INDIA</span>
               </li>
 
 
               <li className={styles.contactItem}>
                 <FaPhone className={styles.contactIcon} />
-                <span>+91 9867857898</span>
+                <span>+91 6354581007</span>
               </li>
 
 
               <li className={styles.contactItem}>
                 <FaEnvelope className={styles.contactIcon} />
-                <span>info@travelsservices.com</span>
+                <span>anushayadav441@gmail.com</span>
               </li>
 
 
