@@ -4,15 +4,13 @@ import validator from 'validator'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
-// Token
 const TOKEN_EXPIRES_IN = '24h';
-const JWT_SECRET = 'your_jwt_secret_here';
+const JWT_SECRET = process.env.JWT_SECRET?.trim();
 
-// REGISTER FUNCTION
-const createToken = (userId) => {
-    if (!JWT_SECRET) throw new Error('JWT_SECRET is not defined on the server');
+function createToken(userId) {
+    if (!JWT_SECRET) throw new Error('Set JWT_SECRET in backend/.env');
     return jwt.sign({ id: userId }, JWT_SECRET, { expiresIn: TOKEN_EXPIRES_IN });
-};
+}
 
 export async function register(req,res) {
     try{

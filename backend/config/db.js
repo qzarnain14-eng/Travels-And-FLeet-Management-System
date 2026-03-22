@@ -1,11 +1,15 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-export const connectDB = async() => {
-    try {
-        await mongoose.connect('mongodb+srv://mauryasuman718_db_user:mauryasuman@cluster0.r6ezacr.mongodb.net/?appName=Cluster0/carrental');
-        console.log("DB Connect Successfully");
-    } catch (error) {
-        console.warn("Database connection failed:", error.message);
-        console.log("Server will continue running without database");
-    }
+export async function connectDB() {
+  const uri = process.env.MONGO_URI?.trim();
+  if (!uri) {
+    console.warn('MONGO_URI not set — skipping MongoDB');
+    return;
+  }
+  try {
+    await mongoose.connect(uri);
+    console.log('MongoDB connected');
+  } catch (err) {
+    console.warn('MongoDB failed:', err.message);
+  }
 }

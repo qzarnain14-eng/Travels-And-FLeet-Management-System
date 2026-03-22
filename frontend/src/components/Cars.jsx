@@ -5,6 +5,7 @@ import { FaShieldAlt, FaTachometerAlt, FaUserFriends } from 'react-icons/fa'
 import { FaGasPump } from 'react-icons/fa'
 import { FaArrowRight } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 const Cars = () => {
 
@@ -77,8 +78,18 @@ const Cars = () => {
                                     </div>
                                 </div>
 
-                                <button onClick={() => navigate(`/car/${car.id}`, { state: { car } })
-                                } className={carPageStyles.bookButton}
+                                <button onClick={() => {
+                                    const token = localStorage.getItem('authToken');
+                                    if (!token) {
+                                        toast.info("Please login to book your car", {
+                                            position: "top-center",
+                                            autoClose: 3000,
+                                        });
+                                        navigate('/login', { state: { from: `/car/${car.id}` } });
+                                    } else {
+                                        navigate(`/car/${car.id}`, { state: { car } });
+                                    }
+                                }} className={carPageStyles.bookButton}
                                 >
                                     <span className={carPageStyles.buttonText}>
                                         Book Now

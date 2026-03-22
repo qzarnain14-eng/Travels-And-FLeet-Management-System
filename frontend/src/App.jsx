@@ -8,6 +8,9 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import CarPage from './pages/CarPage.jsx'
 import CarDetailPage from './pages/CarDetailPage.jsx'
+import MyBookingsPage from './pages/MyBookingsPage.jsx'
+import PaymentPage from './pages/PaymentPage.jsx'
+import PaymentSuccessPage from './pages/PaymentSuccessPage.jsx'
 import { FaArrowUp } from 'react-icons/fa'
 import { useLocation } from 'react-router-dom'
 import { Navigate } from 'react-router-dom'
@@ -52,6 +55,21 @@ const App = () => {
         <Route path='/signup' element={<SignUp />} />
         <Route path='/contact' element={<ContactPage />} />
         <Route path='/cars' element={<CarPage />} />
+        <Route path='/bookings' element={
+          <ProtectedRoute>
+            <MyBookingsPage />
+          </ProtectedRoute>
+        } />
+        <Route path='/payment' element={
+          <ProtectedRoute>
+            <PaymentPage />
+          </ProtectedRoute>
+        } />
+        <Route path='/payment/success' element={
+          <ProtectedRoute>
+            <PaymentSuccessPage />
+          </ProtectedRoute>
+        } />
         <Route path='/car/:id' element={
           <ProtectedRoute>
             <CarDetailPage />

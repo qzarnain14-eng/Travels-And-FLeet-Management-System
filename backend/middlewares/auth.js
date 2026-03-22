@@ -1,38 +1,28 @@
-import jwt from 'jsonwebtoken'
-import user from'../models/userModel.js';
+import jwt from 'jsonwebtoken';
+import User from '../models/userModel.js';
 
-const JWT_SECRET = 'your_jwt_secret_here';
+const JWT_SECRET = process.env.JWT_SECRET?.trim();
 
-export default async function authMiddleware(req,res,next) {
-    const authHeader =req.headers.authorization;
+export default async function authMiddleware(req, res, next) {
+  const header = req.headers.authorization;
+  if (!header?.startsWith('Bearer ')) {
+    return res.status(401).json({ success: false, message: 'No token' });
+  }
+  const token = header.slice(7);
+  if (!JWT_SECRET) {
+    return res.status(500).json({ success: false, message: 'JWT_SECRET missing in .env' });
+  }
 
-if(!authHeader || !authHeader.startsWith('Bearer')){
-    return res.status(401).json({
-        success:false,
-        message:'Not authorized, token missing'
-    })
-}
-const token = authHeader.split('')[1];
-
-try{
-   const payload = jwt.verify(token,JWT_SECRET);
-   const user =await user.findById(payload.id).select('-password')
-
-   if (!user){
-    return res.status(401).json({
-        success:false,
-        message:'User not found '
-    })
-   }
-   req.user = user;
-   next();
-}
-catch (err) {
-    console.error('JWT verification failed:',err)
-    return res.status(401).json({
-        success:false,
-        message:'Token missing invalid or expired'
-    })
-
-}
+  try {
+    const payload = jwt.verify(token, JWT_SECRET);
+    const user = await User.findById(payload.id).select('-password');
+    if (!user) {
+      return res.status(401).json({ success: false, message: 'User not found' });
+    }
+    req.user = user;
+    next();
+  } catch (err) {
+    console.error('JWT:', err.message);
+    return res.status(401).json({ success: false, message: 'Invalid or expired token' });
+  }
 }

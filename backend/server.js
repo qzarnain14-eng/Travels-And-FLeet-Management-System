@@ -1,57 +1,38 @@
-import express from 'express'
-import cors from 'cors'
-import dotenv from 'dotenv'
+import 'dotenv/config';
+import express from 'express';
+import cors from 'cors';
 import { connectDB } from './config/db.js';
-import userRouter from './routes/userRoutes.js';
+import authRoutes from './routes/userRoutes.js';
+import paymentRoutes from './routes/paymentRoutes.js';
 
 const app = express();
-const port = 5000;
-dotenv.config();
+const PORT = Number(process.env.PORT) || 5000;
 
 connectDB();
 
-// MIDDLEWARES 
-app.use(cors({
-    origin: '*',
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-    credentials: true,
-    optionsSuccessStatus: 200
-}));
-app.use(express.json());
+app.use(cors({ origin: '*', credentials: true }));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-// ROUTES 
-app.use('/api/auth', userRouter);
+app.use('/api/auth', authRoutes);
+app.use('/api/payment', paymentRoutes);
 
-app.get('/api/ping', (req, res) => {
-    res.status(200).json({
-        ok: true,
-        time: Date.now()
-    });
-});
+app.get('/api/ping', (req, res) => res.json({ ok: true, time: Date.now() }));
+app.get('/', (req, res) => res.json({ message: 'API running' }));
 
-app.get('/', (req, res) => {
-    res.status(200).json({ message: 'API WORKING' });
-});
+app.use((req, res) =>
+  res.status(404).json({ success: false, message: 'Route not found' })
+);
 
-// 404 Handler
-app.use((req, res) => {
-    res.status(404).json({
-        success: false,
-        message: 'Route not found'
-    });
-});
-
-// Error Handler
 app.use((err, req, res, next) => {
-    console.error('Error:', err);
-    res.status(500).json({
-        success: false,
-        message: 'Internal server error',
-        error: err.message
-    });
+  console.error(err);
+  res.status(500).json({
+    success: false,
+    message: 'Server error',
+    error: err.message,
+  });
 });
 
-app.listen(port, () => {
-    console.log(`Server Started on port ${port}`);
+app.listen(PORT, () => {
+  console.log(`API http://localhost:${PORT}`);
 });

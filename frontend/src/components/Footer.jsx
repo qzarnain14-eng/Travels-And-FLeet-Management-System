@@ -1,12 +1,42 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { footerStyles as styles } from '../assets/dummyStyles';
 import { Link } from 'react-router-dom';
 import logo from '../assets/logocar.png';
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaYoutube, FaEnvelope } from 'react-icons/fa';
 import { FaMapMarkerAlt, FaPhone } from 'react-icons/fa';
 import { GiCarKey } from 'react-icons/gi';
+import { toast } from 'react-toastify';
 
 const Footer = () => {
+  const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleNewsletterSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!email.trim()) {
+      toast.error('Please enter a valid email');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      // Simulate API call - in real app, send to backend
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Store email in localStorage for persistence
+      const emails = JSON.parse(localStorage.getItem('newsletterEmails') || '[]');
+      if (!emails.includes(email)) {
+        emails.push(email);
+        localStorage.setItem('newsletterEmails', JSON.stringify(emails));
+      }
+      
+      toast.success('Successfully subscribed to newsletter!');
+      setEmail('');
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <footer className={styles.container}>
       <div className={styles.topElements}>
@@ -51,10 +81,10 @@ const Footer = () => {
               Quick Links
             </h3>
             <ul className={styles.linkList}>
-              {['Home', 'Cars', 'Contact Us'].map((link, i) => (
+              {['Home', 'Cars', 'My Bookings', 'Contact Us'].map((link, i) => (
                 <li key={i}>
                   <Link
-                    to={link === 'Home' ? '/' : link === 'Contact Us' ? '/contact' : '/cars'}
+                    to={link === 'Home' ? '/' : link === 'Contact Us' ? '/contact' : link === 'My Bookings' ? '/bookings' : '/cars'}
                     className={styles.linkItem}
                   >
                     <span className={styles.bullet}></span>
@@ -111,15 +141,25 @@ const Footer = () => {
             </h3>
 
             <p className={styles.newsletterText}>
-              Subcribe for Special Offer and Updates
+              Subscribe for Special Offer and Updates
             </p>
 
-            <form className="space-y-3">
-              <input type="email" placeholder="Your Email Address" className={styles.input}
+            <form onSubmit={handleNewsletterSubmit} className="space-y-3">
+              <input 
+                type="email" 
+                placeholder="Your Email Address" 
+                className={styles.input}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={loading}
               />
-              <button type="submit" className={styles.subscribeButton}>
+              <button 
+                type="submit" 
+                className={styles.subscribeButton}
+                disabled={loading}
+              >
                 <GiCarKey className="mr-2 text-lg sm:text-xl" />
-                Subscribe Now
+                {loading ? 'Subscribing...' : 'Subscribe Now'}
               </button>
             </form>
           </div>

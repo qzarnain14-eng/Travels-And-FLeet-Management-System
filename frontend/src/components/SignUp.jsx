@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { signupStyles } from '../assets/dummyStyles'
 import { useNavigate, Link } from 'react-router-dom'
-import { useEffect } from 'react'
 import { FaArrowLeft, FaUser, FaLock, FaEye, FaEyeSlash, FaEnvelope, FaChevronRight, FaCheck } from 'react-icons/fa'
 import { toast } from 'react-toastify'
 import logo from '../assets/logocar.png'
@@ -18,12 +17,7 @@ const SignUp = () => {
     })
     const [showPassword, setShowPassword] = useState(false);
     const [acceptedTerms, setAcceptedTerms] = useState(false);
-    const [isActive, setIsActive] = useState(false);
-
-
-    useEffect(() => {
-        setIsActive(true);
-    }, []);
+    const [isActive] = useState(true);
 
     const handleChange = (e) => {
         const { name, value } = e.target;

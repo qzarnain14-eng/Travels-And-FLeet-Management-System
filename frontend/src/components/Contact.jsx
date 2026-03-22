@@ -8,6 +8,16 @@ import { FaUser, FaPhone, FaCar, FaStar } from 'react-icons/fa';
 const Contact = () => {
 
     const styles = contactPageStyles;
+    
+    // Initialize triangle positions once using lazy initializer
+    const [trianglePositions] = useState(() =>
+        [...Array(15)].map(() => ({
+            left: Math.random() * 100,
+            top: Math.random() * 100,
+            rotation: Math.random() * 360,
+            scale: Math.random() * 0.5 + 0.5
+        }))
+    );
 
     const [formData, setFormData] = useState({
         name: "",
@@ -71,16 +81,16 @@ const Contact = () => {
             {/* FLOATING PARTICLES */}
 
             <div className={styles.floatingTriangles}>
-                {[...Array(15)].map((_, i) => (
+                {trianglePositions.map((pos, i) => (
                     <div
                         key={i}
                         className={styles.triangle}
                         style={{
-                            left: `${Math.random() * 100}%`,
-                            top: `${Math.random() * 100}%`,
+                            left: `${pos.left}%`,
+                            top: `${pos.top}%`,
                             clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
                             background: i % 3 === 0 ? '#f97316' : i % 3 === 1 ? '#fb923c' : '#fdba74',
-                            transform: `rotate(${Math.random() * 360}deg) scale(${Math.random() * 0.5 + 0.5})`
+                            transform: `rotate(${pos.rotation}deg) scale(${pos.scale})`
                         }}
                     ></div>
                 ))}

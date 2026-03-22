@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { loginStyles } from '../assets/dummyStyles'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useState } from 'react'
@@ -14,11 +14,7 @@ const Login = () => {
 
     const [credentials, setCredentials] = useState({ email: "", password: "" });
     const [showPassword, setShowPassword] = useState(false);
-    const [isActive, setIsActive] = useState(false);
-
-    useEffect(() => {
-        setIsActive(true);
-    }, []);
+    const [isActive] = useState(true);
 
     const handleChange = e => {
         setCredentials(prev => ({

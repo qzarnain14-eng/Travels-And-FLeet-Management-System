@@ -1,22 +1,15 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useMemo } from 'react';
 import { AddCarPageStyles, toastStyles } from '../assets/dummyStyles';
-import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-
-const baseURL = 'http://localhost:5000';
-const api = axios.create({
-    baseURL: baseURL,
-    headers: {
-        'Content-Type': 'application/json',
-    },
-});
+import { useFleet } from '../context/FleetContext.jsx';
 
 const AddCar = () => {
-    const initialFormData = {
+    const { addCar } = useFleet();
+    const initialFormData = useMemo(() => ({
         carName: "",
         dailyPrice: "",
-        seats: "",
+        seats: "5",
         fuelType: "Petrol",
         mileage: "",
         transmission: "Automatic",
@@ -26,7 +19,12 @@ const AddCar = () => {
         category: "Sedan",
         image: null,
         imagePreview: null,
-    };
+    }), []);
+
+    const seatOptions = useMemo(
+        () => ["2", "3", "4", "5", "6", "7", "8"],
+        []
+    );
 
     const [data, setData] = useState(initialFormData);
     const FileRef = useRef(null);
@@ -35,11 +33,8 @@ const AddCar = () => {
         const { name, value } = e.target;
         setData(prev => ({ ...prev, [name]: value }));
     }, []);
-    // For IMG HANDLING
-    const handleImageChange = useCallback((e) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
-
+    const applyImageFile = useCallback((file) => {
+        if (!file || !file.type.startsWith("image/")) return;
         const reader = new FileReader();
         reader.onload = (evt) =>
             setData((prev) => ({
@@ -49,6 +44,24 @@ const AddCar = () => {
             }));
         reader.readAsDataURL(file);
     }, []);
+
+    const handleImageChange = useCallback(
+        (e) => {
+            const file = e.target.files?.[0];
+            applyImageFile(file);
+        },
+        [applyImageFile]
+    );
+
+    const handleImageDrop = useCallback(
+        (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const file = e.dataTransfer.files?.[0];
+            applyImageFile(file);
+        },
+        [applyImageFile]
+    );
 
     const resetfrom = useCallback(() => {
         setData(initialFormData);
@@ -96,10 +109,8 @@ const AddCar = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // For now just log the payload and show a success toast
-        console.log('Submitting car:', data);
-        showToast('success', 'Car added', 'Car details saved (console log).');
-        // Reset form then navigate to Manage Cars after a short delay
+        addCar({ ...data });
+        showToast('success', 'Listed successfully', 'Your car is ready to appear in the fleet.');
         resetfrom();
         setTimeout(() => navigate('/manage-cars'), 600);
     };
@@ -123,7 +134,7 @@ const AddCar = () => {
                         <span className={AddCarPageStyles.titleGradient}>Add Your Car</span>
                     </h1>
                     <p className={AddCarPageStyles.subtitle}>
-                        share your vehicle with the world and start earning today.
+                        Share your vehicle with the world and start earning today
                     </p>
                 </div>
                 <div className={AddCarPageStyles.formContainer}>
@@ -136,13 +147,36 @@ const AddCar = () => {
                                 </div>
 
                                 <div>
-                                    <label className={AddCarPageStyles.label}>Model</label>
-                                    <input name="model" value={data.model} onChange={handleChange} className={AddCarPageStyles.input} placeholder="Model name" />
+                                    <label className={AddCarPageStyles.label}>Daily Price ($)</label>
+                                    <div className="relative">
+                                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none">$</span>
+                                        <input name="dailyPrice" value={data.dailyPrice} onChange={handleChange} className={AddCarPageStyles.inputWithPrefix} placeholder="49.99" />
+                                    </div>
                                 </div>
 
                                 <div>
-                                    <label className={AddCarPageStyles.label}>Year</label>
-                                    <input name="year" value={data.year} onChange={handleChange} className={AddCarPageStyles.input} placeholder="e.g. 2022" />
+                                    <label className={AddCarPageStyles.label}>Seats</label>
+                                    <select name="seats" value={data.seats} onChange={handleChange} className={AddCarPageStyles.select}>
+                                        {seatOptions.map((n) => (
+                                            <option key={n} value={n}>{n} seats</option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label className={AddCarPageStyles.label}>Fuel Type</label>
+                                    <select name="fuelType" value={data.fuelType} onChange={handleChange} className={AddCarPageStyles.select}>
+                                        <option>Petrol</option>
+                                        <option>Diesel</option>
+                                        <option>Electric</option>
+                                        <option>Hybrid</option>
+                                        <option>CNG</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label className={AddCarPageStyles.label}>Mileage (MPG)</label>
+                                    <input name="mileage" value={data.mileage} onChange={handleChange} className={AddCarPageStyles.input} placeholder="e.g. 28" />
                                 </div>
 
                                 <div>
@@ -150,24 +184,15 @@ const AddCar = () => {
                                     <select name="category" value={data.category} onChange={handleChange} className={AddCarPageStyles.select}>
                                         <option>Sedan</option>
                                         <option>SUV</option>
+                                        <option>Sports</option>
+                                        <option>Coupe</option>
                                         <option>Hatchback</option>
-                                        <option>Van</option>
-                                        <option>Convertible</option>
+                                        <option>Luxury</option>
                                     </select>
-                                </div>
-
-                                <div>
-                                    <label className={AddCarPageStyles.label}>Daily Price ($)</label>
-                                    <input name="dailyPrice" value={data.dailyPrice} onChange={handleChange} className={AddCarPageStyles.input} placeholder="e.g. 49.99" />
                                 </div>
                             </div>
 
                             <div className={AddCarPageStyles.formColumn}>
-                                <div>
-                                    <label className={AddCarPageStyles.label}>Seats</label>
-                                    <input name="seats" value={data.seats} onChange={handleChange} className={AddCarPageStyles.input} placeholder="e.g. 5" />
-                                </div>
-
                                 <div>
                                     <label className={AddCarPageStyles.label}>Transmission</label>
                                     <select name="transmission" value={data.transmission} onChange={handleChange} className={AddCarPageStyles.select}>
@@ -177,23 +202,18 @@ const AddCar = () => {
                                 </div>
 
                                 <div>
-                                    <label className={AddCarPageStyles.label}>Fuel Type</label>
-                                    <select name="fuelType" value={data.fuelType} onChange={handleChange} className={AddCarPageStyles.select}>
-                                        <option>Petrol</option>
-                                        <option>Diesel</option>
-                                        <option>Hybrid</option>
-                                        <option>Electric</option>
-                                    </select>
+                                    <label className={AddCarPageStyles.label}>Year</label>
+                                    <input name="year" value={data.year} onChange={handleChange} className={AddCarPageStyles.input} placeholder="e.g. 2022" />
                                 </div>
 
                                 <div>
-                                    <label className={AddCarPageStyles.label}>Mileage</label>
-                                    <input name="mileage" value={data.mileage} onChange={handleChange} className={AddCarPageStyles.input} placeholder="e.g. 15 km/l" />
+                                    <label className={AddCarPageStyles.label}>Model</label>
+                                    <input name="model" value={data.model} onChange={handleChange} className={AddCarPageStyles.input} placeholder="Model name" />
                                 </div>
 
                                 <div>
-                                    <label className={AddCarPageStyles.label}>Short Description</label>
-                                    <textarea name="description" value={data.description} onChange={handleChange} className={AddCarPageStyles.textarea} rows={3} placeholder="Add a short description about the car" />
+                                    <label className={AddCarPageStyles.label}>Description</label>
+                                    <textarea name="description" value={data.description} onChange={handleChange} className={AddCarPageStyles.textarea} rows={5} placeholder="Describe the car for renters" />
                                 </div>
                             </div>
                         </div>
@@ -201,7 +221,11 @@ const AddCar = () => {
                         <div className="mt-6">
                             <label className={AddCarPageStyles.label}>Car Image</label>
                             <div className={AddCarPageStyles.imageUploadContainer}>
-                                <label className={AddCarPageStyles.imageUploadLabel}>
+                                <label
+                                    className={AddCarPageStyles.imageUploadLabel}
+                                    onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); }}
+                                    onDrop={handleImageDrop}
+                                >
                                     {data.imagePreview ? (
                                         <img src={data.imagePreview} alt="preview" className="w-full h-48 object-cover rounded-xl" />
                                     ) : (
@@ -220,7 +244,7 @@ const AddCar = () => {
 
                         <div className="mt-8 flex items-center justify-between">
                             <button type="button" onClick={resetfrom} className={AddCarPageStyles.buttonText + ' ' + AddCarPageStyles.submitButton + ' bg-gray-700/30 hover:bg-gray-700/40'}>Reset</button>
-                            <button type="submit" className={AddCarPageStyles.submitButton}><span className={AddCarPageStyles.buttonText}>Add Car</span></button>
+                            <button type="submit" className={AddCarPageStyles.submitButton}><span className={AddCarPageStyles.buttonText}>List Your Car</span></button>
                         </div>
                     </form>
 

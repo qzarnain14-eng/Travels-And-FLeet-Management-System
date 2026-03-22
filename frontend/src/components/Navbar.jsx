@@ -38,6 +38,7 @@ const Navbar = () => {
     { to: "/", label: "Home" },
     { to: "/cars", label: "Cars" },
     { to: "/contact", label: "Contact" },
+    ...(isLoggedIn ? [{ to: "/bookings", label: "My Bookings" }] : []),
   ];
 
   const handleLogout = useCallback(() => {

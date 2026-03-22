@@ -3,6 +3,7 @@ import { homeCarsStyles as styles } from '../assets/dummyStyles'
 import CarsData from '../assets/HcarsData';
 import { Zap, Users, Fuel, Gauge, CheckCircle, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const HomeCars = () => {
     const navigate = useNavigate();
@@ -70,7 +71,7 @@ const HomeCars = () => {
                             </div>
                             <div className={styles.imageContainer}>
                                 <img src={car.image} alt={car.name} onError={handleImageError}
-                                    className=" w-full h-full object-cover transition-transform duration-500"
+                                    className=" w-full h-full object-contain transition-transform duration-500"
                                     style={{
                                         transform: hoveredCard === car.id
                                             ? "rotate(0.5deg)"
@@ -108,9 +109,18 @@ const HomeCars = () => {
                                     ))}
                                 </div>
 
-                                <button onClick={() =>
-                                    navigate(`/cars/${car.id}`, { state: { car } })
-                                }
+                                <button onClick={() => {
+                                    const token = localStorage.getItem('authToken');
+                                    if (!token) {
+                                        toast.info("Please login to book your car", {
+                                            position: "top-center",
+                                            autoClose: 3000,
+                                        });
+                                        navigate('/login', { state: { from: `/car/${car.id}` } });
+                                    } else {
+                                        navigate(`/car/${car.id}`, { state: { car } });
+                                    }
+                                }}
                                     className={styles.bookButton}
                                 >
                                     <span className={styles.buttonText}>
