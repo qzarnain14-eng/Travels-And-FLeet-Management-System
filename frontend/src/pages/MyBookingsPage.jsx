@@ -20,6 +20,7 @@ const FILTER_TABS = [
   { id: 'cancelled', label: 'Cancelled' },
 ];
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function getBookingCategory(booking) {
   if (booking.cancelled) return 'cancelled';
   const end = new Date(booking.returnDate);

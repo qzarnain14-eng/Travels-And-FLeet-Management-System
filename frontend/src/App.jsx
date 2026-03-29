@@ -10,7 +10,8 @@ import CarPage from './pages/CarPage.jsx'
 import CarDetailPage from './pages/CarDetailPage.jsx'
 import MyBookingsPage from './pages/MyBookingsPage.jsx'
 import PaymentPage from './pages/PaymentPage.jsx'
-import PaymentSuccessPage from './pages/PaymentSuccessPage.jsx'
+import PaymentSuccess from './pages/PaymentSuccess.jsx'
+import PaymentCancel from './pages/PaymentCancel.jsx'
 import { FaArrowUp } from 'react-icons/fa'
 import { useLocation } from 'react-router-dom'
 import { Navigate } from 'react-router-dom'
@@ -67,7 +68,12 @@ const App = () => {
         } />
         <Route path='/payment/success' element={
           <ProtectedRoute>
-            <PaymentSuccessPage />
+            <PaymentSuccess />
+          </ProtectedRoute>
+        } />
+        <Route path='/payment/cancel' element={
+          <ProtectedRoute>
+            <PaymentCancel />
           </ProtectedRoute>
         } />
         <Route path='/car/:id' element={
