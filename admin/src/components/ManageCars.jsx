@@ -141,13 +141,31 @@ const ManageCars = () => {
                   )}
                 </div>
                 <h3 className="text-white font-semibold text-lg">{car.name}</h3>
-                <p className="text-sm text-gray-400">
+                <p className="text-sm text-gray-400 mb-2">
                   {car.model} • {car.year}
                 </p>
-                <div className="mt-4 flex items-center justify-between">
-                  <span className="text-orange-400 font-bold">
-                    ${Number(car.price).toFixed(2)}/day
-                  </span>
+
+                <div className="grid grid-cols-2 gap-2 text-xs text-gray-400 mb-3">
+                  <div>
+                    <div className="font-semibold text-gray-300">Model</div>
+                    <div className="text-white">{car.model || '-'}</div>
+                  </div>
+                  <div>
+                    <div className="font-semibold text-gray-300">Year</div>
+                    <div className="text-white">{car.year || '-'}</div>
+                  </div>
+                  <div>
+                    <div className="font-semibold text-gray-300">Mileage (MPG)</div>
+                    <div className="text-white">{car.mileage || '-'}</div>
+                  </div>
+                  <div>
+                    <div className="font-semibold text-gray-300">Daily Price ($)</div>
+                    <div className="text-white">${Number(car.price).toFixed(2)}</div>
+                  </div>
+                </div>
+
+                <div className="mt-2 flex items-center justify-between">
+                  <span className="text-green-400 font-semibold">Available</span>
                   <div className="flex gap-2">
                     <button
                       type="button"
