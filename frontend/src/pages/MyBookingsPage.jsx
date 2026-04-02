@@ -104,11 +104,10 @@ const MyBookingsPage = () => {
                   key={tab.id}
                   type="button"
                   onClick={() => setFilter(tab.id)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all border ${
-                    filter === tab.id
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all border ${filter === tab.id
                       ? 'bg-gradient-to-r from-orange-600 to-amber-600 text-white border-orange-500'
                       : 'bg-gray-800/60 text-gray-300 border-gray-700 hover:border-orange-500/50'
-                  }`}
+                    }`}
                 >
                   {tab.label}
                 </button>

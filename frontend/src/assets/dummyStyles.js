@@ -71,7 +71,7 @@ export const loginStyles = {
     orb3: "absolute bottom-1/3 left-2/3 rounded-full blur-3xl transition-all duration-1000 w-28 h-28 sm:w-32 sm:h-32 bg-gradient-to-r from-orange-200/10 to-orange-400/10"
   },
 
-  backButton: "absolute top-3 left-6 z-10 flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-3 rounded-full transition-shadow duration-300 shadow-lg hover:shadow-xl bg-white/5 text-white hover:bg-white/10",
+  backButton: "absolute top-24 left-6 z-10 flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-3 rounded-full transition-shadow duration-300 shadow-lg hover:shadow-xl bg-white/5 text-white hover:bg-white/10",
 
   loginCard: {
     container: "w-full max-w-md sm:mt-14 z-10 transform transition-all duration-500 hover:scale-[1.02]",
@@ -114,7 +114,7 @@ export const signupStyles = {
     orb3: "absolute bottom-[15%] sm:bottom-1/3 left-[65%] sm:left-2/3 w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full transition-all duration-1000 bg-gradient-to-r from-orange-100/8 to-orange-300/10 blur-3xl"
   },
 
-  backButton: "absolute top-4 sm:top-6 left-4 sm:left-6 z-10 flex items-center gap-1 sm:gap-2 px-3 py-2 sm:px-4 sm:py-3 rounded-full transition-all duration-300 group shadow-lg hover:shadow-xl bg-white/5 text-white hover:bg-white/10",
+  backButton: "absolute top-24 left-4 sm:left-6 z-10 flex items-center gap-1 sm:gap-2 px-3 py-2 sm:px-4 sm:py-3 rounded-full transition-all duration-300 group shadow-lg hover:shadow-xl bg-white/5 text-white hover:bg-white/10",
 
   signupCard: {
     container: "w-full max-w-[90%] sm:max-w-md py-5 sm:py-7 mt-9 z-10 transform transition-all duration-500 hover:scale-[1.02] px-2 sm:px-4",
@@ -208,9 +208,9 @@ export const homeCarsStyles = {
 // assets/dummyStyles.js
 // assets/dummyStyles.js
 export const carDetailStyles = {
-  pageContainer: "relative min-h-screen overflow-hidden py-6 px-4 sm:px-6 lg:px-8 bg-black",
+  pageContainer: "relative min-h-screen overflow-hidden pt-24 pb-6 px-4 sm:px-6 lg:px-8 bg-black",
   contentContainer: "relative z-10 max-w-7xl mx-auto",
-  backButton: "absolute top-1 cursor-pointer left-4 p-2 bg-gray-800 rounded-full shadow hover:shadow-lg z-20 border border-gray-700 hover:bg-gray-700 transition-all",
+  backButton: "absolute top-20 cursor-pointer left-4 p-2 bg-gray-800 rounded-full shadow hover:shadow-lg z-20 border border-gray-700 hover:bg-gray-700 transition-all",
   backButtonIcon: "text-orange-400 text-lg",
   mainLayout: "pt-12 flex flex-col lg:flex-row gap-8",
   leftColumn: "lg:w-2/3 space-y-6",
@@ -223,7 +223,7 @@ export const carDetailStyles = {
   pricePerDay: "text-base sm:text-lg font-normal text-gray-400",
   specsGrid: "grid grid-cols-2 sm:grid-cols-4 gap-4",
   specCard: "flex flex-col items-center bg-gray-800/60 backdrop-blur-sm p-3 sm:p-4 rounded-xl border border-gray-700 hover:border-orange-500 transition-all",
-  specIcon: "text-xl sm:text-2xl mb-2",
+  specIcon: "text-xl sm:text-2xl mb-2 text-orange-400",
   specLabel: "text-xs sm:text-sm text-gray-400",
   specValue: "font-semibold text-base sm:text-lg text-white",
   aboutSection: "bg-gray-800/60 backdrop-blur-sm p-4 sm:p-6 rounded-xl border border-gray-700 space-y-3",
@@ -236,7 +236,7 @@ export const carDetailStyles = {
   form: "space-y-4",
   grid2: "grid grid-cols-2 gap-3",
   formLabel: "text-xs sm:text-sm text-gray-300 mb-1",
-  inputContainer: (active) => `relative rounded-lg border transition-all ${active ? 'border-orange-500' : 'border-gray-600'}`,
+  inputContainer: (active) => `relative rounded-lg border transition-all ${active ? 'border-orange-500' : 'border-orange-400'}`,
   inputIcon: "absolute left-3 top-2.5 text-orange-400",
   inputField: "w-full pl-10 pr-2 py-1.5 sm:py-2 bg-transparent text-gray-200 text-sm sm:text-base outline-none",
   textInputField: "w-full pl-10 pr-3 py-1.5 sm:py-2 bg-transparent text-gray-200 text-sm sm:text-base outline-none",
@@ -338,7 +338,7 @@ export const footerStyles = {
 // ... existing styles ...
 
 export const contactPageStyles = {
-  container: "relative min-h-screen py-8 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-b from-gray-950 to-black",
+  container: "relative min-h-screen pt-24 pb-8 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-b from-gray-950 to-black",
   diamondPattern: "absolute inset-0 opacity-9 pointer-events-none",
   floatingTriangles: "absolute inset-0 pointer-events-none",
   triangle: "absolute w-6 h-6 opacity-10",
@@ -384,7 +384,7 @@ export const contactPageStyles = {
 
 // assets/dummyStyles.js
 export const carPageStyles = {
-  pageContainer: "relative min-h-screen py-8 pt-12 sm:py-12 md:py-16 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-b from-gray-950 to-black",
+  pageContainer: "relative min-h-screen pt-24 pb-8 sm:pb-12 md:pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-b from-gray-950 to-black",
   contentContainer: "relative z-10 max-w-7xl mx-auto",
   headerContainer: "text-center mb-10 sm:mb-12 pt-13 md:mb-16",
   headerDecoration: "absolute -bottom-3 -right-3 w-6 h-6 rounded-full bg-gradient-to-r from-amber-500 to-rose-500",
