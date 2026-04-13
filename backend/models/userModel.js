@@ -13,6 +13,27 @@ const userSchema = new mongoose.Schema({
     password:{
         type :String,
         required:true
+    },
+    phone: {
+        type: String,
+        default: null
+    },
+    address: {
+        type: String,
+        default: null
+    },
+    role: {
+        type: String,
+        enum: ['user', 'admin'],
+        default: 'user'
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false
+    },
+    profileImage: {
+        type: String,
+        default: null
     }
 },  {
     timestamps:true

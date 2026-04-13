@@ -5,6 +5,9 @@ import { connectDB } from './config/db.js';
 import authRoutes from './routes/userRoutes.js';
 import stripeRoutes from './routes/stripeRoutes.js';
 import testimonialRoutes from './routes/testimonialRoutes.js';
+import carRoutes from './routes/carRoutes.js';
+import bookingRoutes from './routes/bookingRoutes.js';
+import reportRoutes from './routes/reportRoutes.js';
 
 const app = express();
 const PORT = Number(process.env.PORT) || 5000;
@@ -46,11 +49,17 @@ app.use((req, res, next) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/stripe', stripeRoutes);
 app.use('/api/testimonials', testimonialRoutes);
+app.use('/api/cars', carRoutes);
+app.use('/api/bookings', bookingRoutes);
+app.use('/api/reports', reportRoutes);
 
 console.log('Routes registered:');
 console.log('- /api/auth');
 console.log('- /api/stripe');
 console.log('- /api/testimonials');
+console.log('- /api/cars');
+console.log('- /api/bookings');
+console.log('- /api/reports');
 console.log('- /api/ping');
 console.log('- / (root)');
 
